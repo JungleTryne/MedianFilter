@@ -1,56 +1,56 @@
 # Median Filter
 
-Данила Мишин, Б05-922
+Danila Mishin, B05-922
 
-### Сборка
+### Build
 
-```bash
+``bash
 mkdir build
 cd build
-cmake ..
+cmake ...
 make
 ```
 
-### Запуск
-```bash
+### Run
+``bash
 ./MedianFilter --radius 25 --filepath ../resources/cat.bmp --algorithm constant
 ```
-Для вышеописанного примера мы запускаем медианный фильтр радиуса 25
-на картинке кота по относительному пути `../resources/cat.bmp`,
-используя алгоритм с асимптотикой `O(1)`. Доступны следующие
-алгоритмы
+For the example above, we run a median filter with a radius of 25
+on the picture of the cat at the relative path `../resources/cat.bmp`,
+using an algorithm with asymptotics `O(1)`. The following
+algorithms are available:
 
-- `simple` - наивная реализация медианного фильтра
-- `huang` - алгоритм Huang et al.
-- `constant` - алгоритм за `O(1)`
-- `opencv` - реализация opencv (для сравнения)
+- `simple` - a naive implementation of the median filter
+- `huang` - an algorithm by Huang et al.
+- `constant` - algorithm behind `O(1)`
+- `opencv` - implementation of opencv (for tests)
 
-Примеры работы для радиусов 9 и 25 можено посмотреть в
-папке resources. Там же можно найти фотку кота.
+Examples for radii 9 and 25 can be found in
+folder `resources`. There you can also find a picture of the cat.
 
-Результат работы программы совпадает для всех 
-вышеописанных алгоритмов.
+The results of the program work the same for all 
+the above described algorithms.
 
-### Бенчмарк
+### Benchmark
 
-Также для сравнения скорости работы был написан простой benchmark
-на Python, он расположен в папке benchmark. Пример
-его запуска:
+To compare the speeds I have also written a simple benchmark
+in Python, it is located in the folder benchmark. An example
+of running it:
 
-```bash
+``bash
 python3 main.py --program-path ../cmake-build-release-system/MedianFilter --image-path ../resources/cat.bmp
 ```
 
-В `requirements.txt` указаны все требуемые модули для работы
-бенчмарка. В той же папке доступны графики зависимости
-скорости работы алгоритмов (мсек/мегапиксель)
-от радиуса окна. Для алгоритма `simple` бенчмарк не
-запускался для R > 10 в силу неоптимальности алгоритма.
+The `requirements.txt` contains all the required modules for the
+benchmark. In the same folder you can find the graphs of the dependencies
+of the algorithms performance (msec/megapixel)
+on the window radius. For the `simple` algorithm the benchmark was not
+was not run for R > 10 due to non-optimality of the algorithm.
 
-### Фактическая асимптотика
+### Actual asymptotics
 
-Пусть дано изображение `h x w`, фильтр радиуса `R`. 
-Считаем изображение трехканальным. Тогда 
+Let an image `h x w` be given, a filter of radius `R`. 
+Consider the image as a three-channel image. Then 
 
 - `simple`:
 `O(h * w * R * logR)`
@@ -59,22 +59,24 @@ python3 main.py --program-path ../cmake-build-release-system/MedianFilter --imag
 `O(h * w * R)`
 
 - `constant`
-`O(h * w)`
+`O(h * w)`.
 
-Причем две последние оценки амортизированы, так как
-инициализация окна может занять `O(R^2)`, но дальнейший
-проход будет осуществлен за `O(R)` и `O(1)` (соответсвенно
-для алгоритмов)
-для каждого шага прохода.
+And the last two estimates are amortized because
+window initialization may take `O(R^2)`, but further
+pass will take `O(R)` and `O(1)` (respectively
+for algorithms)
+for each step of the pass.
 
-### Оптимальная композиция алгоритмов
+### Optimal composition of algorithms
 
-На графиках видно, что начиная с `R > 100` алгоритм
-`constant` работает лучше, чем `huang`. Оно логично, ведь
-для мелких R в `huang` приходится проходиться по меньшему
-количеству значений (по `O(R)` значениям, вместо `256`).
+The graphs show that with ` R > 100` the algorithm
+`constant` performs better than `huang`. It makes sense, because
+For small R in `huang` we have to go through a smaller
+number of values (by `O(R)` values, instead of `256`).
 
-Понятно, что приведенная реализация далека от оптимальной.
-При оптимизации алгоритмов эта граница может поменяться.
-Но в данной ситуации она равна `R = 100`. До нее надо
-использовать `huang`, после нее - `constant`
+It is clear that the given implementation is far from optimal.
+When optimizing algorithms, this bound may change.
+But in this situation it is `R = 100`. Up to it we should
+use `huang`, after it `constant`.
+
+Translated with www.DeepL.com/Translator (free version)
