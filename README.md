@@ -4,7 +4,7 @@ Danila Mishin, B05-922
 
 ### Build
 
-``bash
+```bash
 mkdir build
 cd build
 cmake ...
@@ -12,7 +12,7 @@ make
 ```
 
 ### Run
-``bash
+```bash
 ./MedianFilter --radius 25 --filepath ../resources/cat.bmp --algorithm constant
 ```
 For the example above, we run a median filter with a radius of 25
@@ -22,7 +22,7 @@ algorithms are available:
 
 - `simple` - a naive implementation of the median filter
 - `huang` - an algorithm by Huang et al.
-- `constant` - algorithm behind `O(1)`
+- `constant` - algorithm `O(1)`
 - `opencv` - implementation of opencv (for tests)
 
 Examples for radii 9 and 25 can be found in
@@ -78,5 +78,3 @@ It is clear that the given implementation is far from optimal.
 When optimizing algorithms, this bound may change.
 But in this situation it is `R = 100`. Up to it we should
 use `huang`, after it `constant`.
-
-Translated with www.DeepL.com/Translator (free version)
