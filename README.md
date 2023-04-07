@@ -1,7 +1,5 @@
 # Median Filter
 
-Danila Mishin, B05-922
-
 ### Build
 
 ```bash
